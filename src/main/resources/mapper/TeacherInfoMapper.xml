@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.wowgz.face_attendance_system.dao.TeacherInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="teacher_number" jdbcType="VARCHAR" property="teacherNumber" />
+    <result column="teacher_password" jdbcType="VARCHAR" property="teacherPassword" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="teacher_sex" jdbcType="VARCHAR" property="teacherSex" />
+    <result column="teacher_age" jdbcType="VARCHAR" property="teacherAge" />
+    <result column="teacher_mobile" jdbcType="VARCHAR" property="teacherMobile" />
+    <result column="teacher_academy" jdbcType="VARCHAR" property="teacherAcademy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, teacher_number, teacher_password, teacher_name, teacher_sex, teacher_age, teacher_mobile, 
+    teacher_academy
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
+    insert into teacher_info (id, teacher_number, teacher_password, 
+      teacher_name, teacher_sex, teacher_age, 
+      teacher_mobile, teacher_academy)
+    values (#{id,jdbcType=INTEGER}, #{teacherNumber,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR}, 
+      #{teacherName,jdbcType=VARCHAR}, #{teacherSex,jdbcType=VARCHAR}, #{teacherAge,jdbcType=VARCHAR}, 
+      #{teacherMobile,jdbcType=VARCHAR}, #{teacherAcademy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
+    insert into teacher_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="teacherNumber != null">
+        teacher_number,
+      </if>
+      <if test="teacherPassword != null">
+        teacher_password,
+      </if>
+      <if test="teacherName != null">
+        teacher_name,
+      </if>
+      <if test="teacherSex != null">
+        teacher_sex,
+      </if>
+      <if test="teacherAge != null">
+        teacher_age,
+      </if>
+      <if test="teacherMobile != null">
+        teacher_mobile,
+      </if>
+      <if test="teacherAcademy != null">
+        teacher_academy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teacherNumber != null">
+        #{teacherNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPassword != null">
+        #{teacherPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherSex != null">
+        #{teacherSex,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAge != null">
+        #{teacherAge,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherMobile != null">
+        #{teacherMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAcademy != null">
+        #{teacherAcademy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
+    update teacher_info
+    <set>
+      <if test="teacherNumber != null">
+        teacher_number = #{teacherNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPassword != null">
+        teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherSex != null">
+        teacher_sex = #{teacherSex,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAge != null">
+        teacher_age = #{teacherAge,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherMobile != null">
+        teacher_mobile = #{teacherMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAcademy != null">
+        teacher_academy = #{teacherAcademy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
+    update teacher_info
+    set teacher_number = #{teacherNumber,jdbcType=VARCHAR},
+      teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      teacher_sex = #{teacherSex,jdbcType=VARCHAR},
+      teacher_age = #{teacherAge,jdbcType=VARCHAR},
+      teacher_mobile = #{teacherMobile,jdbcType=VARCHAR},
+      teacher_academy = #{teacherAcademy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
