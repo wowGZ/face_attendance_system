@@ -20,8 +20,8 @@ public class TestController {
         return "Hello World!";
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/login")
     public String test() {
-        return "test";
+        return "login";
     }
 }
