@@ -1,4 +1,4 @@
-package cn.com.wowgz.face_attendance_system.dao;
+package cn.com.wowgz.face_attendance_system.mapper;
 
 import cn.com.wowgz.face_attendance_system.entitiy.StuInfo;
 

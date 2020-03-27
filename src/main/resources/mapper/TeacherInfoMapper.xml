@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.com.wowgz.face_attendance_system.dao.TeacherInfoMapper">
+<mapper namespace="cn.com.wowgz.face_attendance_system.mapper.TeacherInfoMapper">
   <resultMap id="BaseResultMap" type="cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="teacher_number" jdbcType="VARCHAR" property="teacherNumber" />
@@ -11,16 +11,66 @@
     <result column="teacher_mobile" jdbcType="VARCHAR" property="teacherMobile" />
     <result column="teacher_academy" jdbcType="VARCHAR" property="teacherAcademy" />
   </resultMap>
+
+  <resultMap id="CourseResultMap" type="cn.com.wowgz.face_attendance_system.entitiy.CourseInfo">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="course_number" jdbcType="VARCHAR" property="courseNumber"/>
+    <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+    <result column="course_credit" jdbcType="VARCHAR" property="courseCredit"/>
+  </resultMap>
+
+  <resultMap id="ClassResultMap" type="cn.com.wowgz.face_attendance_system.entitiy.ClassInfo">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="class_number" jdbcType="VARCHAR" property="classNumber"/>
+    <result column="class_population" jdbcType="VARCHAR" property="classPopulation"/>
+    <result column="class_monitor" jdbcType="VARCHAR" property="classMonitor"/>
+    <result column="class_academy" jdbcType="VARCHAR" property="classAcademy"/>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, teacher_number, teacher_password, teacher_name, teacher_sex, teacher_age, teacher_mobile, 
     teacher_academy
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from teacher_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from teacher_info
+    where teacher_number = #{teacherNumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectCourseByTeacherNumber" parameterType="java.lang.String" resultMap="CourseResultMap">
+    select course_info.course_number, course_info.course_name, course_info.course_credit
+    from course_info, teacher_class_course_relation_info
+    where course_info.course_number = teacher_class_course_relation_info.course_number
+	and teacher_number = #{teacherNumber, jdbcType=VARCHAR}
+    group by course_info.course_number
+  </select>
+
+  <select id="selectClassByTeacherNumber" parameterType="java.lang.String" resultMap="ClassResultMap">
+    select class_info.id, class_info.class_number, class_info.class_population, class_info.class_monitor, class_info.class_academy
+    from class_info, teacher_class_course_relation_info
+    where class_info.class_number = teacher_class_course_relation_info.class_number
+    and teacher_number = #{teacherNumber, jdbcType=VARCHAR}
+    group by class_info.class_number
+  </select>
+
+  <select id="selectCourseByTeacherNumberAndClassNumber" resultMap="CourseResultMap">
+    select course_info.id, course_info.course_number, course_info.course_name, course_info.course_credit
+    from course_info, teacher_class_course_relation_info
+    where course_info.course_number = teacher_class_course_relation_info.course_number
+	and teacher_number = #{teacherNumber, jdbcType=VARCHAR}
+	and class_number = #{classNumber, jdbcType=VARCHAR}
+    group by course_info.course_number
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from teacher_info
     where id = #{id,jdbcType=INTEGER}
