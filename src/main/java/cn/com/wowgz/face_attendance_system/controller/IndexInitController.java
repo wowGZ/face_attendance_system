@@ -33,6 +33,11 @@ public class IndexInitController {
     @Autowired
     private TeacherService teacherService;
 
+    /**
+     * 根据用户不通话，动态的初始化Index页面的数据
+     * @param session 提取用户登陆的时候存储的相关信息，以此实现动态查询
+     * @return 返回前台页面初始化函数所需要的Json数据
+     */
     @RequestMapping("/initIndex")
     @ResponseBody
     public IndexInfo toInitIndexPage(HttpSession session){
@@ -75,7 +80,7 @@ public class IndexInitController {
             MenuItemInfo menuItemInfo = new MenuItemInfo();
             menuItemInfo.setTitle(classInfo.getClassNumber());
             menuItemInfo.setIcon("fa fa-list-alt");//随便设置一个图案
-            menuItemInfo.setHref("");//针对班级，显示学生数据，专门设计一个url对这个进行处理就好
+            menuItemInfo.setHref("/menu/classInfo/classNumber=" + classInfo.getClassNumber());//针对班级，显示学生数据，专门设计一个url对这个进行处理就好
             menuItemInfo.setChild(null);
 
             classMenuItemChild.add(menuItemInfo);
@@ -101,7 +106,7 @@ public class IndexInitController {
                 MenuItemInfo itemInfo = new MenuItemInfo();
                 itemInfo.setTitle(courseInfo.getCourseName());
                 itemInfo.setIcon("");
-                itemInfo.setHref("");//设置获取对应班级课程的所有签到记录
+                itemInfo.setHref("/menu/" + classInfo.getClassNumber() + "/" + courseInfo.getCourseNumber());//设置获取对应班级课程的所有签到记录
 
                 itemChild.add(itemInfo);
             }

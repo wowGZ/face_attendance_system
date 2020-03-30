@@ -26,18 +26,18 @@ public class LoginController {
     /**
      * 后台登录验证
      *
-     * @param model    存储需要的数据
      * @param userName 用户名，即登录教师的工号
      * @param password 密码
      * @return 返回后台管理的主页@PathVariable("userName") @PathVariable("password")
      */
     @RequestMapping("/login/{userName}/{password}")
-    public String login(Model model, @PathVariable("userName") String userName,
+    public String login(@PathVariable("userName") String userName,
                         @PathVariable("password") String password, HttpSession session) {
         if (!teacherService.teacherLogin(userName, password)) {
             return "redirect:/page/toLoginError";
         }
         session.setAttribute("teacher", teacherService.selectTeacherByNumber(userName));
+        session.setAttribute("teacherNumber", teacherService.selectTeacherByNumber(userName).getTeacherNumber());
         session.setAttribute("teacherName",teacherService.selectTeacherByNumber(userName).getTeacherName());
         return "redirect:/page/toIndex";
     }

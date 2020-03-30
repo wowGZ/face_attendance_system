@@ -29,17 +29,18 @@ public class PageController {
 
     @RequestMapping("toIndex")
     public String toIndex(){
-        return "/index";
+        return "index";
     }
 
     @RequestMapping("/welcome-1")
     public String toWelcome() {
-        return "/welcome";
+        return "welcome";
     }
 
-    @RequestMapping("/table")
+    @RequestMapping("/toClassInfoTable")
     public String toTable(Model model){
-        
-        return "test";
+
+//        return "testTable";
+        return "classInfoTable";
     }
 }

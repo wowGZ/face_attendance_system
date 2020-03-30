@@ -5,7 +5,6 @@ import cn.com.wowgz.face_attendance_system.entitiy.CourseInfo;
 import cn.com.wowgz.face_attendance_system.entitiy.TeacherInfo;
 import cn.com.wowgz.face_attendance_system.mapper.TeacherInfoMapper;
 import cn.com.wowgz.face_attendance_system.service.TeacherService;
-import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
