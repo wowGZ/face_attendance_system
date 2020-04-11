@@ -47,7 +47,7 @@
   </select>
 
   <select id="selectCourseByTeacherNumber" parameterType="java.lang.String" resultMap="CourseResultMap">
-    select course_info.id course_info.course_number, course_info.course_name, course_info.course_credit
+    select course_info.id, course_info.course_number, course_info.course_name, course_info.course_credit
     from course_info, teacher_class_course_relation_info
     where course_info.course_number = teacher_class_course_relation_info.course_number
 	and teacher_number = #{teacherNumber, jdbcType=VARCHAR}

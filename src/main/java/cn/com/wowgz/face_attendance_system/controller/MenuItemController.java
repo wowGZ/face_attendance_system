@@ -29,4 +29,17 @@ public class MenuItemController {
         return "redirect:/page/toClassInfoTable";
     }
 
+    @RequestMapping("/attendanceInfo/classNumber={classNumber}/courseNumber={courseNumber}")
+    public String toAttendanceInfoTable(@PathVariable("classNumber") String classNumber,
+                                        @PathVariable("courseNumber") String courseNumber,
+                                        HttpSession session){
+
+        return "";
+    }
+
+    @RequestMapping("courseInfo")
+    public String toCourseInfo(){
+        return "redirect:/page/toCourseInfoTable";
+    }
+
 }

@@ -38,9 +38,14 @@ public class PageController {
     }
 
     @RequestMapping("/toClassInfoTable")
-    public String toTable(Model model){
+    public String toClassInfoTable(){
 
 //        return "testTable";
         return "classInfoTable";
+    }
+
+    @RequestMapping("/toCourseInfoTable")
+    public String toCourseInfoTable() {
+        return "courseInfoTable";
     }
 }

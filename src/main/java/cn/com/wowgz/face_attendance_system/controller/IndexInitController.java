@@ -64,8 +64,8 @@ public class IndexInitController {
 
         //初始化课程菜单项，点击之后跳转该教师所带课程的表格页面
         courseMenuItem.setTitle("课程信息");
-        courseMenuItem.setHref("");
-        courseMenuItem.setIcon("");
+        courseMenuItem.setHref("/menu/courseInfo");
+        courseMenuItem.setIcon("fa fa-list-alt");
         courseMenuItem.setChild(null);
 
         //初始化班级信息菜单项，该菜单项的子项为该教师所带班级的班号
@@ -106,7 +106,7 @@ public class IndexInitController {
                 MenuItemInfo itemInfo = new MenuItemInfo();
                 itemInfo.setTitle(courseInfo.getCourseName());
                 itemInfo.setIcon("");
-                itemInfo.setHref("/menu/" + classInfo.getClassNumber() + "/" + courseInfo.getCourseNumber());//设置获取对应班级课程的所有签到记录
+                itemInfo.setHref("/menu/attendanceInfo/classNumber=" + classInfo.getClassNumber() + "/courseNumber=" + courseInfo.getCourseNumber());//设置获取对应班级课程的所有签到记录
 
                 itemChild.add(itemInfo);
             }
