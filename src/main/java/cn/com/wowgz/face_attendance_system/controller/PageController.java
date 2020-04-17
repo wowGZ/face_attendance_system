@@ -4,9 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Author: WowGz
  * Date: 2020/2/29/029
@@ -39,13 +36,16 @@ public class PageController {
 
     @RequestMapping("/toClassInfoTable")
     public String toClassInfoTable(){
-
-//        return "testTable";
         return "classInfoTable";
     }
 
     @RequestMapping("/toCourseInfoTable")
     public String toCourseInfoTable() {
         return "courseInfoTable";
+    }
+
+    @RequestMapping("/toAddStudent")
+    public String toAddClass() {
+        return "addStudent";
     }
 }

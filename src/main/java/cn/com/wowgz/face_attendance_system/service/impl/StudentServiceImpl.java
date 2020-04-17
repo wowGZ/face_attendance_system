@@ -23,4 +23,9 @@ public class StudentServiceImpl implements StudentService {
     public List<StuInfo> selectByClassNumber(String classNumber) {
         return stuInfoMapper.selectByClassNumber(classNumber);
     }
+
+    @Override
+    public int addStudent(StuInfo stuInfo) {
+        return stuInfoMapper.insertSelective(stuInfo);
+    }
 }

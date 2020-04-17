@@ -14,4 +14,6 @@ public interface StudentService {
 
     List<StuInfo> selectByClassNumber(String classNumber);
 
+    int addStudent(StuInfo stuInfo);
+
 }
