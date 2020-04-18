@@ -28,4 +28,9 @@ public class StudentServiceImpl implements StudentService {
     public int addStudent(StuInfo stuInfo) {
         return stuInfoMapper.insertSelective(stuInfo);
     }
+
+    @Override
+    public int deleteStudentByStuNumber(String stuNumber) {
+        return stuInfoMapper.deleteByStudentNumber(stuNumber);
+    }
 }

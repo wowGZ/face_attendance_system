@@ -29,6 +29,10 @@
     delete from stu_info
     where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteByStudentNumber" parameterType="java.lang.String">
+        delete from stu_info
+        where stu_number = #{stuNumber, jdbcType=VARCHAR}
+    </delete>
     <insert id="insert" parameterType="cn.com.wowgz.face_attendance_system.entitiy.StuInfo">
     insert into stu_info (id, stu_number, stu_password, 
       stu_name, stu_sex, stu_age, 

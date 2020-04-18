@@ -29,11 +29,32 @@ public class StudentController {
 
         Map<String, Object> map = new HashMap<>();
         if (result == 1) {
-            map.put("result", "添加成功");
+            map.put("result", "添加成功！");
             return map;
         }
+        map.put("result","添加失败！");
         return map;
 
+    }
+
+    @RequestMapping("/deleteStudent")
+    @ResponseBody
+    public Map<String, Object> deleteStudent(String stuNumber){
+
+        Map<String, Object> map = new HashMap<>();
+        if (stuNumber == null || stuNumber.equals("")){
+            map.put("msg", 500);
+            return map;
+        }
+
+        int result = studentService.deleteStudentByStuNumber(stuNumber);
+        if (result == 1){
+            map.put("msg", 200);
+        } else {
+            map.put("msg", 500);
+        }
+
+        return map;
     }
 
 }

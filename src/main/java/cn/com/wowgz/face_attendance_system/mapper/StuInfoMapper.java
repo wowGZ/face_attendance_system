@@ -8,6 +8,8 @@ public interface StuInfoMapper {
 
     int deleteByPrimaryKey(Integer id);
 
+    int deleteByStudentNumber(String stuNumber);
+
     int insert(StuInfo record);
 
     int insertSelective(StuInfo record);

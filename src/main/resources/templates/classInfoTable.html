@@ -129,7 +129,7 @@
         $(".data-add-btn").on("click", function () {
 
             var index = layer.open({
-                title: '添加用户',
+                title: '添加学生信息',
                 type: 2,
                 shade: 0.2,
                 maxmin: true,
@@ -178,6 +178,23 @@
                     obj.del();
                     // window.location = "";//这里可以请求删除该行数据的url
                     layer.close(index);
+                    $.ajax({
+                        type: "POST",
+                        data: {stuNumber : data.stuNumber},//发给服务端的数据
+                        url: "/student/deleteStudent",
+                        dataType: "json",
+                        success: function (data) {//服务器返回的数据
+                            if (data.msg === 200) {
+                                obj.del();//删除对应行的DOM结构，并更新缓存
+                                layer.close(index);
+                                layer.msg("删除成功", {icon: 6});
+                            } else {
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+
+                    });
+                    return false;
                 });
             }
         });

@@ -16,4 +16,6 @@ public interface StudentService {
 
     int addStudent(StuInfo stuInfo);
 
+    int deleteStudentByStuNumber(String stuNumber);
+
 }
