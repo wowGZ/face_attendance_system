@@ -3,6 +3,7 @@ package cn.com.wowgz.face_attendance_system.mapper;
 import cn.com.wowgz.face_attendance_system.entitiy.StuInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StuInfoMapper {
 
@@ -16,7 +17,11 @@ public interface StuInfoMapper {
 
     StuInfo selectByPrimaryKey(Integer id);
 
+    StuInfo selectByStudentNumber(String stuNumber);
+
     List<StuInfo> selectByClassNumber(String classNumber);
+
+    List<StuInfo> selectByCondition(Map<String, Object> condition);
 
     int updateByPrimaryKeySelective(StuInfo record);
 

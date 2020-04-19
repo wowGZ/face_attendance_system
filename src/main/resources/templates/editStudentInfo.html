@@ -18,46 +18,46 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>添加学生信息</legend>
+            <legend>编辑学生信息</legend>
         </fieldset>
-        <form class="layui-form layuimini-form" id="addStudentForm" method="post">
+        <form class="layui-form layuimini-form" id="updateStudentForm" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label required">学生姓名</label>
                 <div class="layui-input-inline">
                     <input type="text" name="stuName" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入学生姓名"
-                           value="" class="layui-input">
+                           th:value="${session.studentName}" class="layui-input">
                 </div>
                 <label class="layui-form-label required">学生性别</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="stuSex" value="男" title="男" checked="">
-                    <input type="radio" name="stuSex" value="女" title="女">
+                    <input type="radio" name="stuSex" value="男" title="男" th:checked="${session.studentSex == '男'}">
+                    <input type="radio" name="stuSex" value="女" title="女" th:checked="${session.studentSex == '女'}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">学生年龄</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="stuAge" lay-verify="required" placeholder="请输入学生年龄" value=""
+                    <input type="number" name="stuAge" lay-verify="required" placeholder="请输入学生年龄" th:value="${session.studentAge}"
                            class="layui-input">
                 </div>
                 <label class="layui-form-label required">联系方式</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="stuMobile" placeholder="请输入联系方式" value="" class="layui-input">
+                    <input type="text" name="stuMobile" placeholder="请输入联系方式" th:value="${session.studentMobile}" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">所在班级</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="stuClassNumber" placeholder="请输入所在班级" value="" class="layui-input">
+                    <input type="text" name="stuClassNumber" placeholder="请输入所在班级" th:value="${session.studentClassNumber}" class="layui-input">
                 </div>
                 <label class="layui-form-label required">学生学号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="stuNumber" placeholder="请输入学生学号" value="" class="layui-input">
+                    <input type="text" name="stuNumber" placeholder="请输入学生学号" th:value="${session.studentNumber}" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label required">个人密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="stuPassword" placeholder="请输入学生密码" value="" class="layui-input">
+                    <input type="text" name="stuPassword" placeholder="请输入学生密码" th:value="${session.studentPassword}" class="layui-input">
                 </div>
             </div>
 
@@ -70,7 +70,6 @@
         </form>
     </div>
 </div>
-</body>
 
 <script src="../static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
@@ -81,45 +80,33 @@
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            // var index = layer.alert(JSON.stringify(data.field), {
-            //     title: '最终的提交信息'
-            // }, function () {
-            //
-            //     // 关闭弹出层
-            //     layer.close(index);
-            //
-            //     var iframeIndex = parent.layer.getFrameIndex(window.name);
-            //     parent.layer.close(iframeIndex);
-            //
-            // });
-
-
+            // sessionStorage.removeItem("studentPassword");
+            // sessionStorage.removeItem("studentNumber");
+            // sessionStorage.removeItem("studentName");
+            // sessionStorage.removeItem("studentSex");
+            // sessionStorage.removeItem("studentAge");
+            // sessionStorage.removeItem("studentMobile");
+            // sessionStorage.removeItem("studentClassNumber");
             $.ajax({
                 type: "POST",
-                url: "/student/addStudent",
+                data: $("#updateStudentForm").serialize(),//发给服务端的数据
+                url: "/student/updateStudent",
                 dataType: "json",
-                data: $("#addStudentForm").serialize(),
-                success: function (data) {
-
+                success: function (data) {//服务器返回的数据
                     if (data == null) {
                         alert("添加失败！请联系管理员");
                     } else {
-                        // // 关闭弹出层
-                        // layer.close(index);
-                        //
-                        // var iframeIndex = parent.layer.getFrameIndex(window.name);
-                        // parent.layer.close(iframeIndex);
                         $.each(data, function (key, value) {
                             alert(value);
                         });
-                        window.location.href = ("/page/toAddStudent");
                     }
                 }
-            });
 
+            });
             return false;
         });
 
     });
 </script>
+</body>
 </html>

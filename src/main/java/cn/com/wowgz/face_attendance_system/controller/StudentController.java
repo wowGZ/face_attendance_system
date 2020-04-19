@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +53,23 @@ public class StudentController {
             map.put("msg", 200);
         } else {
             map.put("msg", 500);
+        }
+
+        return map;
+    }
+
+    @RequestMapping("/updateStudent")
+    @ResponseBody
+    public Map<String, Object> updateStudent(StuInfo stuInfo, HttpSession session){
+
+        Map<String, Object> map = new HashMap<>();
+
+        stuInfo.setId((Integer) session.getAttribute("studentId"));
+        int result = studentService.updateByPrimaryKeySelective(stuInfo);
+        if (result == 1){
+            map.put("msg", "修改成功");
+        } else {
+            map.put("msg", "修改失败");
         }
 
         return map;

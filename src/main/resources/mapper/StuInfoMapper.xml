@@ -25,6 +25,36 @@
         from stu_info
         where stu_class_number = #{classNumber, jdbcType=VARCHAR}
     </select>
+    <select id="selectByStudentNumber" parameterType="java.lang.String"  resultType="cn.com.wowgz.face_attendance_system.entitiy.StuInfo">
+        select stu_info.id, stu_info.stu_number, stu_info.stu_password, stu_info.stu_name, stu_info.stu_sex, stu_info.stu_age, stu_info.stu_mobile, stu_info.stu_class_number
+        from stu_info
+        where stu_number = #{stuNumber, jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCondition"  parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stu_info
+        <where>
+            stu_class_number = #{stuClassNumber, jdbcType=VARCHAR}
+            <if test="stuNumber != null and stuNumber != ''">
+                and stu_number = #{stuNumber, jdbcType=VARCHAR}
+            </if>
+            <if test="stuName != null and stuName != ''">
+                and stu_name like '%${stuName}%'
+            </if>
+            <if test="stuSex != null and stuSex != ''">
+                and stu_sex = #{stuSex, jdbcType=VARCHAR}
+            </if>
+            <if test="stuAge != null and stuAge != ''">
+                and stu_age = #{stuAge, jdbcType=VARCHAR}
+            </if>
+            <if test="stuMobile != null and stuMobile != ''">
+                and stu_mobile = #{stuMobile, jdbcType=VARCHAR}
+            </if>
+
+
+        </where>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from stu_info
     where id = #{id,jdbcType=INTEGER}

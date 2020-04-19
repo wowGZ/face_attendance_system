@@ -18,27 +18,37 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户姓名</label>
+                            <label class="layui-form-label">学生学号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                                <input type="text" name="stuNumber" id="stuNumber" autocomplete="off"
+                                       class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户性别</label>
+                            <label class="layui-form-label">学生姓名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                <input type="text" name="stuName" id="stuName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户城市</label>
+                            <label class="layui-form-label">学生性别</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
+                                <input type="text" name="stuSex" id="stuSex" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">学生年龄</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="stuAge" id="stuAge" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户职业</label>
+                            <label class="layui-form-label">学生手机号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="classify" autocomplete="off" class="layui-input">
+                                <input type="text" name="stuMobile" id="stuMobile" autocomplete="off"
+                                       class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -107,10 +117,16 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
+            // var result = JSON.stringify(data.field);
+            // layer.alert(result, {
+            //     title: '最终的搜索信息'
+            // });
+
+            var stuNumber = $('#stuNumber');
+            var stuName = $('#stuName');
+            var stuSex = $('#stuSex');
+            var stuAge = $('#stuAge');
+            var stuMobile = $('#stuMobile');
 
             //执行搜索重载
             table.reload('currentTableId', {
@@ -118,7 +134,13 @@
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+
+                    stuNumber: stuNumber.val(),
+                    stuName: stuName.val(),
+                    stuSex: stuSex.val(),
+                    stuAge: stuAge.val(),
+                    stuMobile: stuMobile.val()
+
                 }
             }, 'data');
 
@@ -159,18 +181,27 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-
-                var index = layer.open({
-                    title: '编辑用户',
+                // alert(data.stuNumber);
+                var edit = layer.open({
+                    title: '编辑学生信息',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '/page/table/edit.html',
+                    content: '/page/toEditStudentInfo/' + data.id,
+                    // yes: function(index, layero){
+                    //     //do something
+                    //     // 关闭弹出层
+                    //     layer.close(index);
+                    //
+                    //     var iframeIndex = parent.layer.getFrameIndex(window.name);
+                    //     parent.layer.close(iframeIndex);
+                    // }
+                    // content: '/page/toEditStudentInfo',
                 });
                 $(window).on("resize", function () {
-                    layer.full(index);
+                    layer.full(edit);
                 });
                 return false;
             } else if (obj.event === 'delete') {
@@ -180,7 +211,7 @@
                     layer.close(index);
                     $.ajax({
                         type: "POST",
-                        data: {stuNumber : data.stuNumber},//发给服务端的数据
+                        data: {stuNumber: data.stuNumber},//发给服务端的数据
                         url: "/student/deleteStudent",
                         dataType: "json",
                         success: function (data) {//服务器返回的数据

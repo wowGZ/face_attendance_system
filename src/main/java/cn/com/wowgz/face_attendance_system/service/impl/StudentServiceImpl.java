@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: WowGz
@@ -32,5 +33,25 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int deleteStudentByStuNumber(String stuNumber) {
         return stuInfoMapper.deleteByStudentNumber(stuNumber);
+    }
+
+    @Override
+    public StuInfo selectByStudentNumber(String stuNumber) {
+        return stuInfoMapper.selectByStudentNumber(stuNumber);
+    }
+
+    @Override
+    public StuInfo selectByPrimaryKey(Integer id) {
+        return stuInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<StuInfo> selectByCondition(Map<String, Object> condition) {
+        return stuInfoMapper.selectByCondition(condition);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(StuInfo stuInfo) {
+        return stuInfoMapper.updateByPrimaryKeySelective(stuInfo);
     }
 }

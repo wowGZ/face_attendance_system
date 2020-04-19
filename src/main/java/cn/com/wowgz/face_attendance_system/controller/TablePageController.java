@@ -14,7 +14,9 @@ import sun.net.www.http.HttpCaptureInputStream;
 import javax.servlet.http.HttpSession;
 import java.net.HttpCookie;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: WowGz
@@ -33,14 +35,25 @@ public class TablePageController {
     private TeacherServiceImpl teacherService;
 
     @RequestMapping("/studentInClass")
-    public TableInfo<StuInfo> toInitStuInClass(HttpSession session, int page, int limit) {
+    public TableInfo<StuInfo> toInitStuInClass(HttpSession session, int page , int limit,
+                                               String stuNumber, String stuName, String stuSex,
+                                               String stuAge, String stuMobile) {
         String classNumber = (String) session.getAttribute("classNumber");
 //        session.removeAttribute("classNumber");
 
-        TableInfo<StuInfo> classInfoTable = new TableInfo<>();
-        classInfoTable.setCount(studentService.selectByClassNumber(classNumber).size());
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("stuNumber",stuNumber);
+        condition.put("stuName",stuName);
+        condition.put("stuSex",stuSex);
+        condition.put("stuAge",stuAge);
+        condition.put("stuMobile",stuMobile);
+        condition.put("stuClassNumber", classNumber);
 
-        List<StuInfo> result = studentService.selectByClassNumber(classNumber);
+        TableInfo<StuInfo> classInfoTable = new TableInfo<>();
+        classInfoTable.setCount(studentService.selectByCondition(condition).size());
+
+
+        List<StuInfo> result = studentService.selectByCondition(condition);
 
         List<StuInfo> data = new ArrayList<>();
 
