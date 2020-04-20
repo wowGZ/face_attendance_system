@@ -18,27 +18,21 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户姓名</label>
+                            <label class="layui-form-label">课程号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                                <input type="text" id="courseNumber" name="courseNumber" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户性别</label>
+                            <label class="layui-form-label">课程名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                <input type="text" id="courseName" name="courseName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户城市</label>
+                            <label class="layui-form-label">课程学分</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="city" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户职业</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="classify" autocomplete="off" class="layui-input">
+                                <input type="text" id="courseCredit" name="courseCredit" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -77,7 +71,6 @@
 
         table.render({
             elem: '#currentTableId',
-            // url: '../static/api/table.json',
             url: '/table/coursesTaughtByTeacher',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
@@ -89,10 +82,10 @@
                 [
                     [
                         {type: "checkbox", width: 50, fixed: "left"},
-                        {field: 'id', width: 80, title: 'ID', sort: true},
-                        {field: 'courseNumber', width: 80, title: '学号', sort: true},
-                        {field: 'courseName', width: 80, title: '姓名', sort: true},
-                        {field: 'courseCredit', width: 80, title: '班级', sort: true},
+                        {field: 'id', width: 150, title: 'ID', sort: true},
+                        {field: 'courseNumber', width: 300, title: '课程号', sort: true},
+                        {field: 'courseName', width: 300, title: '课程名', sort: true},
+                        {field: 'courseCredit', width: 300, title: '课程学分', sort: true},
                         {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
                     ]
                 ],
@@ -103,10 +96,14 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
+            // var result = JSON.stringify(data.field);
+            // layer.alert(result, {
+            //     title: '最终的搜索信息'
+            // });
+
+            var courseNumber = $('#courseNumber');
+            var courseName = $('#courseName');
+            var courseCredit = $('#courseCredit');
 
             //执行搜索重载
             table.reload('currentTableId', {
@@ -114,7 +111,9 @@
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    courseNumber : courseNumber.val(),
+                    courseName : courseName.val(),
+                    courseCredit : courseCredit.val()
                 }
             }, 'data');
 
@@ -125,13 +124,13 @@
         $(".data-add-btn").on("click", function () {
 
             var index = layer.open({
-                title: '添加用户',
+                title: '添加课程信息',
                 type: 2,
                 shade: 0.2,
                 maxmin: true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: '/page/table/add.html',
+                content: '/page/toAddCourse',
             });
             $(window).on("resize", function () {
                 layer.full(index);
@@ -157,13 +156,13 @@
             if (obj.event === 'edit') {
 
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '编辑课程信息',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '/page/table/edit.html',
+                    content: '/page/toEditCourseInfo/' + data.id,
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -174,6 +173,24 @@
                     obj.del();
                     // window.location = "";//这里可以请求删除该行数据的url
                     layer.close(index);
+
+                    $.ajax({
+                        type: "POST",
+                        data: {courseNumber: data.courseNumber},//发给服务端的数据
+                        url: "/course/deleteCourse",
+                        dataType: "json",
+                        success: function (data) {//服务器返回的数据
+                            if (data.msg === 200) {
+                                obj.del();//删除对应行的DOM结构，并更新缓存
+                                layer.close(index);
+                                layer.msg("删除成功", {icon: 6});
+                            } else {
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+
+                    });
+                    return false;
                 });
             }
         });

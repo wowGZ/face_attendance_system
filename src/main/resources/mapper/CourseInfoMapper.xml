@@ -16,9 +16,29 @@
     from course_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCondition" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from course_info
+    <where>
+      <if test="courseNumber != null and courseNumber != ''">
+        course_number = #{courseNumber, jdbcType=VARCHAR}
+      </if>
+      <if test="courseName != null and courseName != ''">
+        and course_name = #{courseName, jdbcType=VARCHAR}
+      </if>
+      <if test="courseCredit != null and courseCredit != ''">
+        and course_credit = #{courseCredit, jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from course_info
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCourseNumber">
+    delete from course_info
+    where course_number = #{courseNumber, jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="cn.com.wowgz.face_attendance_system.entitiy.CourseInfo">
     insert into course_info (id, course_number, course_name, 

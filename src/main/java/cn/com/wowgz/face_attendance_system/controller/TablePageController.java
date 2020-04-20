@@ -3,6 +3,7 @@ package cn.com.wowgz.face_attendance_system.controller;
 import cn.com.wowgz.face_attendance_system.entitiy.CourseInfo;
 import cn.com.wowgz.face_attendance_system.entitiy.StuInfo;
 import cn.com.wowgz.face_attendance_system.entitiy.TableInfo;
+import cn.com.wowgz.face_attendance_system.service.impl.CourseServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.StudentServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.TeacherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class TablePageController {
     private StudentServiceImpl studentService;
     @Autowired
     private TeacherServiceImpl teacherService;
+    @Autowired
+    private CourseServiceImpl courseService;
 
     @RequestMapping("/studentInClass")
     public TableInfo<StuInfo> toInitStuInClass(HttpSession session, int page , int limit,
@@ -80,13 +83,19 @@ public class TablePageController {
     }
 
     @RequestMapping("/coursesTaughtByTeacher")
-    public TableInfo<CourseInfo> toInitCourses(HttpSession session, int page, int limit){
+    public TableInfo<CourseInfo> toInitCourses(HttpSession session, int page, int limit,
+                                               String courseNumber, String courseName, String courseCredit){
         String teacherNumber = (String) session.getAttribute("teacherNumber");
 
-        TableInfo<CourseInfo> courseInfoTable = new TableInfo<>();
-        courseInfoTable.setCount(teacherService.selectClassByTeacherNumber(teacherNumber).size());
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("courseNumber", courseNumber);
+        condition.put("courseName", courseName);
+        condition.put("courseCredit", courseCredit);
 
-        List<CourseInfo> result = teacherService.selectCourseByTeacherNumber(teacherNumber);
+        TableInfo<CourseInfo> courseInfoTable = new TableInfo<>();
+        courseInfoTable.setCount(courseService.selectByCondition(condition).size());
+
+        List<CourseInfo> result = courseService.selectByCondition(condition);
         List<CourseInfo> data = new ArrayList<>();
 
         if (page == 1 && page * limit <= courseInfoTable.getCount()) {

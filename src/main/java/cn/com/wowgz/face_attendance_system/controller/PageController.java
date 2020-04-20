@@ -1,12 +1,15 @@
 package cn.com.wowgz.face_attendance_system.controller;
 
+import cn.com.wowgz.face_attendance_system.entitiy.CourseInfo;
 import cn.com.wowgz.face_attendance_system.entitiy.StuInfo;
+import cn.com.wowgz.face_attendance_system.service.impl.CourseServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +25,9 @@ public class PageController {
 
     @Autowired
     private StudentServiceImpl studentService;
+
+    @Autowired
+    private CourseServiceImpl courseService;
 
     @RequestMapping("/login")
     public String toLogin() {
@@ -81,5 +87,26 @@ public class PageController {
     @RequestMapping("/toEditStudentInfo")
     public String toEditStudent(){
         return "editStudentInfo";
+    }
+
+    @RequestMapping("/toAddCourse")
+    public String toAddCourse() {
+        return "addCourse";
+    }
+
+    @RequestMapping("/toEditCourseInfo/{id}")
+    public String toEditCourseInfo(@PathVariable("id") String id, HttpSession session){
+        Integer courseId = Integer.parseInt(id);
+        CourseInfo courseInfo = courseService.selectByPrimaryKey(courseId);
+
+        session.setAttribute("course", courseInfo);
+        session.setAttribute("courseId",courseInfo.getId());
+
+        return "redirect:/page/toEditCourseInfo";
+    }
+
+    @RequestMapping("/toEditCourseInfo")
+    public String toEditCourseInfo(){
+        return "editCourseInfo";
     }
 }
