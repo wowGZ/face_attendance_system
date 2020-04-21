@@ -1,6 +1,7 @@
 package cn.com.wowgz.face_attendance_system.controller;
 
 import cn.com.wowgz.face_attendance_system.entitiy.*;
+import cn.com.wowgz.face_attendance_system.service.impl.AttendanceRecordServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.CourseServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.StudentServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.TeacherServiceImpl;
@@ -13,10 +14,7 @@ import sun.net.www.http.HttpCaptureInputStream;
 import javax.servlet.http.HttpSession;
 import java.awt.image.ImageProducer;
 import java.net.HttpCookie;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: WowGz
@@ -35,6 +33,8 @@ public class TablePageController {
     private TeacherServiceImpl teacherService;
     @Autowired
     private CourseServiceImpl courseService;
+    @Autowired
+    private AttendanceRecordServiceImpl attendanceRecordService;
 
     @RequestMapping("/attendanceRecord")
     public TableInfo<AttendanceRecordInfoInTable> toInitAttendanceRecord(HttpSession session, int page, int limit,
@@ -43,10 +43,39 @@ public class TablePageController {
         Map<String, Object> condition = new HashMap<>();
         condition.put("stuNumber", stuNumber);
         condition.put("stuName", stuName);
+        condition.put("classNumber", session.getAttribute("classNumber"));
+        condition.put("courseNumber", session.getAttribute("courseNumber"));
 
         TableInfo<AttendanceRecordInfoInTable> attendanceRecordInfoTable = new TableInfo<>();
 
-        return new TableInfo<>();
+        attendanceRecordInfoTable.setCount(attendanceRecordService.selectTableInfoByCondition(condition).size());
+
+
+        List<AttendanceRecordInfoInTable> result = attendanceRecordService.selectTableInfoByCondition(condition);
+
+        List<AttendanceRecordInfoInTable> data = new ArrayList<>();
+
+        if (page == 1 && page * limit <= attendanceRecordInfoTable.getCount()) {
+            for (int i = 0; i < limit; i++) {
+                data.add(result.get(i));
+            }
+        } else if (page == 1 && page * limit > attendanceRecordInfoTable.getCount()){
+            for (int i = 0; i < attendanceRecordInfoTable.getCount(); i++) {
+                data.add(result.get(i));
+            }
+        } else if (page * limit > attendanceRecordInfoTable.getCount()) {
+            for (int i = (page - 1) * limit; i < attendanceRecordInfoTable.getCount(); i++) {
+                data.add(result.get(i));
+            }
+        } else {
+            for (int i = ((page - 1) * limit); i < page * limit; i++) {
+                data.add(result.get(i));
+            }
+        }
+
+        attendanceRecordInfoTable.setData(data);
+
+        return attendanceRecordInfoTable;
     }
 
     @RequestMapping("/studentInClass")

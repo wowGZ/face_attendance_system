@@ -7,7 +7,7 @@
         <result column="stu_number" jdbcType="VARCHAR" property="stuNumber"/>
         <result column="class_number" jdbcType="VARCHAR" property="classNumber"/>
         <result column="course_number" jdbcType="VARCHAR" property="courseNumber"/>
-        <result column="attendance_time" jdbcType="TIMESTAMP" property="attendanceTime"/>
+        <result column="attendance_time" jdbcType="DATE" property="attendanceTime"/>
     </resultMap>
     <resultMap id="TableInfoMap" type="cn.com.wowgz.face_attendance_system.entitiy.AttendanceRecordInfoInTable">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -39,6 +39,12 @@
         </if>
         <if test="stuName != '' and stuName != null">
             and stu_info.stu_name = #{stuName, jdbcType=VARCHAR}
+        </if>
+        <if test="classNumber != '' and classNumber != null">
+            and stu_info.stu_class_number = #{classNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="courseNumber != '' and courseNumber != null">
+            and attendance_record_info.course_number = #{courseNumber, jdbcType=VARCHAR}
         </if>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

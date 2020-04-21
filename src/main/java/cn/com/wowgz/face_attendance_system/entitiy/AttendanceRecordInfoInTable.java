@@ -14,7 +14,7 @@ public class AttendanceRecordInfoInTable {
     private String stuNumber;
     private String stuName;
     private String stuSex;
-    private Date attendanceTime;
+    private String attendanceTime;
 
     public Integer getId() {
         return id;
@@ -56,11 +56,11 @@ public class AttendanceRecordInfoInTable {
         this.stuSex = stuSex;
     }
 
-    public Date getAttendanceTime() {
+    public String getAttendanceTime() {
         return attendanceTime;
     }
 
-    public void setAttendanceTime(Date attendanceTime) {
+    public void setAttendanceTime(String attendanceTime) {
         this.attendanceTime = attendanceTime;
     }
 }
