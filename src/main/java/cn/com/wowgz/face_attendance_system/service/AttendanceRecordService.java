@@ -18,4 +18,6 @@ public interface AttendanceRecordService {
 
     List<AttendanceRecordInfoInTable> selectTableInfoByCondition(Map<String, Object> condition);
 
+    int deleteAttendanceRecordByPrimaryKey(Integer id);
+
 }

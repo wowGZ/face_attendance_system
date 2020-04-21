@@ -40,4 +40,9 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     public List<AttendanceRecordInfoInTable> selectTableInfoByCondition(Map<String, Object> condition) {
         return attendanceRecordInfoMapper.selectTableInfoByCondition(condition);
     }
+
+    @Override
+    public int deleteAttendanceRecordByPrimaryKey(Integer id) {
+        return attendanceRecordInfoMapper.deleteByPrimaryKey(id);
+    }
 }

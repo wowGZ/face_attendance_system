@@ -17,7 +17,7 @@ import java.util.Map;
  * Description:
  */
 @Controller
-@RequestMapping("/attendance")
+@RequestMapping("/attendanceRecord")
 public class AttendanceController {
 
     @Autowired
@@ -39,4 +39,22 @@ public class AttendanceController {
         return map;
     }
 
+    @RequestMapping("/deleteAttendanceRecord")
+    @ResponseBody
+    public Map<String, Object> deleteAttendanceRecord(Integer id){
+        Map<String, Object> map = new HashMap<>();
+        if (id == null || id.equals("")){
+            map.put("msg", 500);
+            return map;
+        }
+
+        int result = attendanceRecordService.deleteAttendanceRecordByPrimaryKey(id);
+        if (result == 1){
+            map.put("msg", 200);
+        } else {
+            map.put("msg", 500);
+        }
+
+        return map;
+    }
 }
