@@ -38,7 +38,7 @@
             and stu_info.stu_number = #{stuNumber, jdbcType=VARCHAR}
         </if>
         <if test="stuName != '' and stuName != null">
-            and stu_info.stu_name = #{stuName, jdbcType=VARCHAR}
+            and stu_info.stu_name like '%${stuName}%'
         </if>
         <if test="classNumber != '' and classNumber != null">
             and stu_info.stu_class_number = #{classNumber, jdbcType=VARCHAR}
