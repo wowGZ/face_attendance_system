@@ -60,6 +60,11 @@ public class PageController {
         return "courseInfoTable";
     }
 
+    @RequestMapping("/toAttendanceInfoTable")
+    public String toAttendanceInfoTable(){
+        return "attendanceInfoTable";
+    }
+
     @RequestMapping("/toAddStudent")
     public String toAddClass() {
         return "addStudent";
@@ -108,5 +113,10 @@ public class PageController {
     @RequestMapping("/toEditCourseInfo")
     public String toEditCourseInfo(){
         return "editCourseInfo";
+    }
+
+    @RequestMapping("/toAddAttendanceRecordInfo")
+    public String toAddAttendanceRecordInfo(){
+        return "addAttendanceRecordInfo";
     }
 }

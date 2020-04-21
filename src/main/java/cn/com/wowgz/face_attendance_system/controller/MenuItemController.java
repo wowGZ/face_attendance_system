@@ -20,8 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/menu")
 public class MenuItemController {
-    @Autowired
-    private StudentServiceImpl studentService;
+
 
     @RequestMapping("/classInfo/classNumber={classNumber}")
     public String toClassInfoTable(@PathVariable("classNumber") String classNumber, HttpSession session){
@@ -33,8 +32,9 @@ public class MenuItemController {
     public String toAttendanceInfoTable(@PathVariable("classNumber") String classNumber,
                                         @PathVariable("courseNumber") String courseNumber,
                                         HttpSession session){
-
-        return "";
+        session.setAttribute("classNumber", classNumber);
+        session.setAttribute("courseNumber", courseNumber);
+        return "redirect:/page/toAttendanceInfoTable";
     }
 
     @RequestMapping("courseInfo")

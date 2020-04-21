@@ -1,8 +1,6 @@
 package cn.com.wowgz.face_attendance_system.controller;
 
-import cn.com.wowgz.face_attendance_system.entitiy.CourseInfo;
-import cn.com.wowgz.face_attendance_system.entitiy.StuInfo;
-import cn.com.wowgz.face_attendance_system.entitiy.TableInfo;
+import cn.com.wowgz.face_attendance_system.entitiy.*;
 import cn.com.wowgz.face_attendance_system.service.impl.CourseServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.StudentServiceImpl;
 import cn.com.wowgz.face_attendance_system.service.impl.TeacherServiceImpl;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.net.www.http.HttpCaptureInputStream;
 
 import javax.servlet.http.HttpSession;
+import java.awt.image.ImageProducer;
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +35,19 @@ public class TablePageController {
     private TeacherServiceImpl teacherService;
     @Autowired
     private CourseServiceImpl courseService;
+
+    @RequestMapping("/attendanceRecord")
+    public TableInfo<AttendanceRecordInfoInTable> toInitAttendanceRecord(HttpSession session, int page, int limit,
+                                                                         String stuNumber, String stuName){
+
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("stuNumber", stuNumber);
+        condition.put("stuName", stuName);
+
+        TableInfo<AttendanceRecordInfoInTable> attendanceRecordInfoTable = new TableInfo<>();
+
+        return new TableInfo<>();
+    }
 
     @RequestMapping("/studentInClass")
     public TableInfo<StuInfo> toInitStuInClass(HttpSession session, int page , int limit,
