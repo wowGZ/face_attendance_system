@@ -34,6 +34,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public int updateTeacherByPrimaryKey(TeacherInfo teacherInfo) {
+        return teacherInfoMapper.updateByPrimaryKeySelective(teacherInfo);
+    }
+
+    @Override
     public TeacherInfo selectTeacherByNumber(String number) {
         return teacherInfoMapper.selectByNumber(number);
     }

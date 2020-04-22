@@ -16,6 +16,8 @@ public interface TeacherService {
 
     boolean teacherLogin(String name, String password);
 
+    int updateTeacherByPrimaryKey(TeacherInfo teacherInfo);
+
     TeacherInfo selectTeacherByNumber(String number);
 
     List<CourseInfo> selectCourseByTeacherNumber(String teacherNumber);

@@ -119,4 +119,14 @@ public class PageController {
     public String toAddAttendanceRecordInfo(){
         return "addAttendanceRecordInfo";
     }
+
+    @RequestMapping("/toTeacherSetting")
+    public String toTeacherSetting(){
+        return "teacher-setting";
+    }
+
+    @RequestMapping("/toEditTeacherPassword")
+    public String toEditTeacherPassword(){
+        return "teacher-password";
+    }
 }
